@@ -25,7 +25,7 @@ CICD
 Elastic Search
 Envoy Proxy
 Grpc
-GitOps
+GitHub Actions
 Helm
 Istio
 ```
