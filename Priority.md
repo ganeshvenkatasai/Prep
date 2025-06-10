@@ -17,6 +17,7 @@ RabbitMQ
 Kubernetes
 MongoDB
 MySQL
+Redis
 ```
 
 ## Priority 3 :
