@@ -24,6 +24,7 @@ git fetch origin                        # Fetch the latest changes from the remo
 
 git merge <branch_name>                 # Merge another branch into the current branch
 git rebase <branch_name>                # Reapply commits from the current branch onto another branch
+git cherry-pick <commit-hash>           # Picks a specific commit from one branch and applies it to another
 
 git reset --soft HEAD~1                 # Undo the last commit but keep changes staged
 git reset --hard HEAD~1                 # Undo the last commit and discard changes permanently
