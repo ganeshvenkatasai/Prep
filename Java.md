@@ -460,8 +460,147 @@ for (Day day : Day.values()) {
 | `ordinal()`       | Returns the position (index) of the enum | `Day.MONDAY.ordinal()` → `0`             |
 
 
+## Lambda :
 
+### What is a Lambda Expression?
 
+```
+A lambda expression is a short block of code that: Takes parameters, Executes a block of code, Returns a result.
+(parameter1, parameter2) -> { code block }
+
+Use lambdas when:
+Working with functional interfaces (Runnable, Comparator, etc.)
+Using Java Streams API
+Writing event listeners (e.g., button clicks)
+Implementing simple single-method interfaces
+
+Avoid when:
+The logic is too complex (use a proper method instead)
+You need multiple methods (use a class)
+```
+
+### Before Lambdas: The Old Way (Anonymous Classes)
+
+```
+// Old way - Anonymous class
+Runnable runnable = new Runnable() {
+    @Override
+    public void run() {
+        System.out.println("Running!");
+    }
+};
+runnable.run();
+
+//With Lambda (New Way)
+Runnable runnable = () -> System.out.println("Running!");
+runnable.run();
+```
+
+### Lambda with Parameters
+
+```
+// Functional Interface
+interface MathOperation {
+    int operate(int a, int b);
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // Lambda implementation
+        MathOperation add = (a, b) -> a + b;
+        System.out.println(add.operate(5, 3)); // Output: 8
+    }
+}
+```
+
+### Built-in Functional Interfaces
+
+| Interface       | Method       | Example Lambda Usage             |
+|-----------------|--------------|-----------------------------------|
+| `Consumer<T>`   | `accept(T)`  | `(s) -> System.out.println(s)`    |
+| `Supplier<T>`   | `get()`      | `() -> "Hello"`                   |
+| `Function<T,R>` | `apply(T)`   | `(s) -> s.length()`              |
+| `Predicate<T>`  | `test(T)`    | `(s) -> s.startsWith("A")`        |
+
+### Method References (Shortcut for Lambdas)
+
+| Type               | Syntax                 | Equivalent Lambda               |
+|--------------------|------------------------|----------------------------------|
+| Static Method      | `Math::max`            | `(a, b) -> Math.max(a, b)`       |
+| Instance Method    | `System.out::println`  | `(s) -> System.out.println(s)`   |
+| Constructor        | `ArrayList::new`       | `() -> new ArrayList<>()`        |
+
+```
+List<String> names = Arrays.asList("Alice", "Bob");
+
+// Lambda
+names.forEach(name -> System.out.println(name));
+
+// Method Reference (shorter)
+names.forEach(System.out::println);
+```
+
+### Real World Use Cases
+
+** Sorting a List
+```
+List<String> names = Arrays.asList("Bob", "Alice", "Charlie");
+
+// Old way
+Collections.sort(names, new Comparator<String>() {
+    @Override
+    public int compare(String a, String b) {
+        return a.compareTo(b);
+    }
+});
+
+// With Lambda
+Collections.sort(names, (a, b) -> a.compareTo(b));
+
+// Even shorter
+names.sort((a, b) -> a.compareTo(b));
+```
+
+** Filtering with Streams
+```
+List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);
+
+// Get even numbers
+List<Integer> evens = numbers.stream()
+                            .filter(n -> n % 2 == 0)
+                            .collect(Collectors.toList());
+System.out.println(evens); // [2, 4]
+```
+
+** Thread Creation
+```
+// Old way
+new Thread(new Runnable() {
+    @Override
+    public void run() {
+        System.out.println("Thread running");
+    }
+}).start();
+
+// With Lambda
+new Thread(() -> System.out.println("Thread running")).start();
+```
+
+### Common Mistakes to Avoid
+
+```
+Using non-final variables in lambdas
+int count = 0;
+Runnable r = () -> count++; // Error: count must be final or effectively final
+
+Overcomplicating lambdas
+// Bad
+Function<String, Integer> length = s -> { return s.length(); };
+
+// Good
+Function<String, Integer> length = s -> s.length();
+
+```
 
 
 

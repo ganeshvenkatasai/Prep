@@ -114,6 +114,26 @@ Best Practice: Prefer HashMap (use ConcurrentHashMap for threads).
 
 Enum: Type-safe, can have methods.
 
+Garbage Collection: Automatic (Java, Python). GC prevents memory leaks but adds overhead.
+Manual Management: Explicit malloc/free (C/C++).
+
+
+
+It works : return n % 2 == 0 ? n : n * 2;
+
+Type casting : (int)
+
+
+Functional      		OOP Programming
+Pure functions, immutability.	Objects, state, inheritance.
+E.g., Java Streams.		E.g., Java classes.
+Key Difference: FP avoids side effects; OOP models real-world entities.
+
+
+Shallow Copy: Copies references (shared nested objects).    ArrayList<String> shallow = original; 
+Deep Copy: Copies entire object hierarchy.		    ArrayList<String> deep = new ArrayList<>(original);  
+
+
 
 
 ```
@@ -265,6 +285,14 @@ public class SecurityConfig {
         return http.build();  
     }  
 }  
+
+
+@Autowired vs @Qualifier
+@Autowired: Injects a bean by type.
+@Qualifier: Injects a specific bean by name.
+
+
+
 
 
 ```
