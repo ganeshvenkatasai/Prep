@@ -602,6 +602,228 @@ Function<String, Integer> length = s -> s.length();
 
 ```
 
+## Stream
+
+### What is a Stream
+
+```
+A Stream is a sequence of elements supporting:
+Sequential or parallel operations.
+Lazy evaluation (operations execute only when needed).
+No storage (does not modify the original collection).
+
+Key Characteristics
+✔ Not a data structure (unlike List, Set).
+✔ Supports functional-style operations (filter, map, reduce).
+✔ Can be processed only once (like an iterator).
+```
+
+### Creating Streams
+
+**From a Collection**
+
+```
+List<String> names = Arrays.asList("Alice", "Bob", "Charlie");
+
+// Create a sequential stream
+Stream<String> stream = names.stream();
+
+// Create a parallel stream
+Stream<String> parallelStream = names.parallelStream();
+```
+
+**From Arrays**
+
+```
+String[] languages = {"Java", "Python", "C++"};
+Stream<String> stream = Arrays.stream(languages);
+```
+
+**Using Stream.of()**
+
+```
+Stream<Integer> numbers = Stream.of(1, 2, 3, 4, 5);
+```
+
+**Infinite Streams**
+
+```
+// Generate random numbers infinitely
+Stream<Double> randomNumbers = Stream.generate(Math::random);
+
+// Stream of odd numbers: 1, 3, 5, ...
+Stream<Integer> oddNumbers = Stream.iterate(1, n -> n + 2);
+```
+
+## Intermediate vs Terminal Operations
+
+```
+List<String> names = Arrays.asList("Alice", "Bob", "Anna", "Alex");
+
+List<String> result = names.stream()          // Create stream
+    .filter(name -> name.startsWith("A"))     // Intermediate (lazy)
+    .map(String::toUpperCase)                 // Intermediate (lazy)
+    .sorted()                                 // Intermediate (lazy)
+    .collect(Collectors.toList());            // Terminal (eager)
+
+System.out.println(result); // [ALEX, ALICE, ANNA]
+```
+
+### Common Stream Operations
+
+**filter(Predicate<T>) → Selects elements**
+
+```
+List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);
+List<Integer> evens = numbers.stream()
+    .filter(n -> n % 2 == 0)
+    .collect(Collectors.toList()); // [2, 4]
+```
+
+**map(Function<T,R>) → Transforms elements**
+
+```
+List<String> names = Arrays.asList("Alice", "Bob");
+List<Integer> nameLengths = names.stream()
+    .map(String::length)
+    .collect(Collectors.toList()); // [5, 3]
+```
+
+**sorted() → Orders elements**
+
+```
+List<String> names = Arrays.asList("Bob", "Alice");
+List<String> sortedNames = names.stream()
+    .sorted()
+    .collect(Collectors.toList()); // ["Alice", "Bob"]
+```
+
+**distinct() → Removes duplicates**
+
+```
+List<Integer> numbers = Arrays.asList(1, 2, 2, 3, 3);
+List<Integer> unique = numbers.stream()
+    .distinct()
+    .collect(Collectors.toList()); // [1, 2, 3]
+```
+
+**limit(n) → Takes first n elements**
+
+```
+Stream.iterate(1, n -> n + 1)
+    .limit(5)
+    .forEach(System.out::println); // 1, 2, 3, 4, 5
+```
+
+**skip(n) → Skips first n elements**
+
+```
+List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);
+List<Integer> skipped = numbers.stream()
+    .skip(2)
+    .collect(Collectors.toList()); // [3, 4, 5]
+```
+
+### Terminal Operations
+
+**forEach(Consumer<T>) → Iterates over elements**
+
+```
+List<String> names = Arrays.asList("Alice", "Bob");
+names.stream().forEach(System.out::println);
+```
+
+**collect(Collector) → Converts to a collection**
+
+```
+List<String> names = Stream.of("Alice", "Bob")
+    .collect(Collectors.toList());
+
+Set<Integer> numbers = Stream.of(1, 2, 2)
+    .collect(Collectors.toSet());
+```
+
+**count() → Counts elements**
+
+```
+long count = Stream.of(1, 2, 3).count(); // 3
+```
+
+**reduce() → Combines elements**
+
+```
+Optional<Integer> sum = Stream.of(1, 2, 3)
+    .reduce((a, b) -> a + b); // 6
+```
+
+**anyMatch() / allMatch() / noneMatch() → Boolean checks**
+
+```
+boolean hasA = Stream.of("Alice", "Bob")
+    .anyMatch(s -> s.contains("A")); // true
+
+boolean allEven = Stream.of(2, 4, 6)
+    .allMatch(n -> n % 2 == 0); // true
+```
+
+### Parallel Streams
+
+```
+Uses multiple threads for faster processing.
+Useful for large datasets.
+
+List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);
+
+// Sequential
+long count = numbers.stream().count();
+
+// Parallel (faster for big data)
+long parallelCount = numbers.parallelStream().count();
+
+```
+
+### Real World Use Cases
+
+**Filtering & Transforming Data**
+
+```
+List<Product> products = getProducts();
+
+// Get names of products with price > 100
+List<String> expensiveProducts = products.stream()
+    .filter(p -> p.getPrice() > 100)
+    .map(Product::getName)
+    .collect(Collectors.toList());
+```
+
+**Finding Max/Min**
+
+```
+Optional<Integer> max = Stream.of(5, 3, 8, 2)
+    .max(Integer::compare); // 8
+```
+
+**Grouping Data**
+
+```
+Map<String, List<Employee>> employeesByDept = employees.stream()
+    .collect(Collectors.groupingBy(Employee::getDepartment));
+```
+
+### Common Mistakes
+
+```
+Stream<Integer> stream = Stream.of(1, 2, 3);
+stream.forEach(System.out::println);
+stream.forEach(System.out::println); // Error: stream already closed
+```
+
+```
+Optional<Integer> sum = Stream.of(1, 2).reduce((a, b) -> a + b);
+System.out.println(sum.get()); // OK if stream is not empty
+```
+
+
 
 
 
