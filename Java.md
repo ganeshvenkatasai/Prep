@@ -542,7 +542,7 @@ names.forEach(System.out::println);
 
 ### Real World Use Cases
 
-**Sorting a List
+**Sorting a List**
 ```
 List<String> names = Arrays.asList("Bob", "Alice", "Charlie");
 
@@ -561,7 +561,7 @@ Collections.sort(names, (a, b) -> a.compareTo(b));
 names.sort((a, b) -> a.compareTo(b));
 ```
 
-**Filtering with Streams
+**Filtering with Streams**
 ```
 List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);
 
@@ -572,7 +572,7 @@ List<Integer> evens = numbers.stream()
 System.out.println(evens); // [2, 4]
 ```
 
-**Thread Creation
+**Thread Creation**
 ```
 // Old way
 new Thread(new Runnable() {
