@@ -358,6 +358,108 @@ list.sort((a, b) -> {
 });
 ```
 
+## Enum :
+
+### Basic Enum Syntax 
+
+```
+public enum Day {
+    MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY
+}
+
+Day today = Day.MONDAY;
+System.out.println(today); // Output: MONDAY
+
+switch (today) {
+    case MONDAY -> System.out.println("Week starts!");
+    case FRIDAY -> System.out.println("Weekend is near!");
+    default -> System.out.println("Midweek day.");
+}
+```
+
+### Enum with Custom Values
+
+```
+public enum Planet {
+    MERCURY(3.303e+23, 2.4397e6),
+    VENUS(4.869e+24, 6.0518e6),
+    EARTH(5.976e+24, 6.37814e6);
+
+    private final double mass;   // in kilograms
+    private final double radius; // in meters
+
+    // Constructor (private by default)
+    Planet(double mass, double radius) {
+        this.mass = mass;
+        this.radius = radius;
+    }
+
+    // Method to calculate surface gravity
+    public double surfaceGravity() {
+        return 6.67300E-11 * mass / (radius * radius);
+    }
+}
+
+Planet earth = Planet.EARTH;
+System.out.println(earth.surfaceGravity()); // Output: 9.8 (approx)
+```
+
+### Enum with Abstract Methods
+
+```
+public enum Operation {
+    ADD {
+        public int apply(int a, int b) { return a + b; }
+    },
+    SUBTRACT {
+        public int apply(int a, int b) { return a - b; }
+    },
+    MULTIPLY {
+        public int apply(int a, int b) { return a * b; }
+    };
+
+    public abstract int apply(int a, int b); // Abstract method
+}
+
+System.out.println(Operation.ADD.apply(5, 3)); // Output: 8
+System.out.println(Operation.MULTIPLY.apply(5, 3)); // Output: 15
+```
+
+### Enum Implementing Interfaces
+
+```
+public enum Task implements Runnable {
+    TASK1 {
+        @Override
+        public void run() {
+            System.out.println("Running Task 1");
+        }
+    },
+    TASK2 {
+        @Override
+        public void run() {
+            System.out.println("Running Task 2");
+        }
+    };
+}
+```
+
+### Looping Through Enum Values
+
+```
+for (Day day : Day.values()) {
+    System.out.println(day);
+}
+```
+
+| Method            | Description                              | Example                                  |
+|-------------------|------------------------------------------|------------------------------------------|
+| `values()`        | Returns all enum constants               | `Day[] days = Day.values();`             |
+| `valueOf(String)` | Converts a string to enum                | `Day d = Day.valueOf("MONDAY");`         |
+| `name()`          | Returns the enum constant's name         | `"MONDAY".equals(Day.MONDAY.name())`     |
+| `ordinal()`       | Returns the position (index) of the enum | `Day.MONDAY.ordinal()` → `0`             |
+
+
 
 
 

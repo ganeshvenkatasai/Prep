@@ -1,6 +1,120 @@
 ## Java
 
 ```
+Static Method: Belongs to the class (no instance needed).
+Instance Method: Requires an object.
+
+Feature	  	Stack Memory	  			Heap Memory
+Stores	  	Primitives, method calls, references	Objects, arrays, instance variables
+Lifetime  	Short-lived (method scope)		Long-lived (until garbage collected)
+Thread    	Safety	Each thread has its own stack	Shared among all threads
+Speed	  	Faster access				Slower access
+Memory Mgmt.	Automatic (LIFO)			Managed by Garbage Collector (GC)
+Size		Fixed (can overflow)			Dynamic (can run out of memory)
+
+Wrapper Classes (Integer, Double): Used in collections (e.g., List<Integer>). Provide utility methods (Integer.parseInt()).
+Primitives (int, double): Better performance.
+
+Array for performance-critical fixed-size data.
+List for flexibility.
+
+Set (HashSet, TreeSet) : No duplicates. Unordered (except TreeSet).
+List (ArrayList, LinkedList) Allows duplicates. Ordered (index-based).
+
+1. Comparable (java.lang.Comparable)
+Purpose: Defines the natural ordering of a class (default sorting logic).
+Method to Implement: compareTo(T obj)
+
+class Student implements Comparable<Student> {
+    String name;
+    int age;
+
+    @Override
+    public int compareTo(Student other) {
+        return this.age - other.age; // Sort by age (ascending)
+    }
+}
+
+// Usage:
+List<Student> students = new ArrayList<>();
+students.add(new Student("Alice", 25));
+students.add(new Student("Bob", 20));
+Collections.sort(students); // Sorts by age (natural order)
+
+
+2. Comparator (java.util.Comparator)
+Purpose: Provides custom sorting logic without modifying the original class.
+
+Method to Implement: compare(T obj1, T obj2)
+// Comparator for sorting by name
+class NameComparator implements Comparator<Student> {
+    @Override
+    public int compare(Student s1, Student s2) {
+        return s1.name.compareTo(s2.name); // Sort by name (String's natural order)
+    }
+}
+
+// Usage:
+List<Student> students = new ArrayList<>();
+students.add(new Student("Alice", 25));
+students.add(new Student("Bob", 20));
+Collections.sort(students, new NameComparator()); // Sorts by name
+
+Using Lambda (Java 8+)
+// Sort by age (descending)
+Collections.sort(students, (s1, s2) -> s2.age - s1.age);
+
+// Alternative (using Comparator.comparing)
+students.sort(Comparator.comparing(Student::getName)); // Sort by name
+students.sort(Comparator.comparingInt(Student::getAge).reversed()); // Sort by age (descending)
+
+
+Interface						Abstract Class
+All methods are abstract (Java 8+ allows default).	Can have abstract + concrete methods.
+Supports multiple inheritance.				Single inheritance.
+No constructors.					Can have constructors.
+
+Final:
+Variables: Cannot be reassigned (final int x = 5;).
+Methods: Cannot be overridden.
+Classes: Cannot be inherited.
+
+== vs equals()
+==: Compares memory addresses (references).
+equals(): Compares content (overridden in String, Integer).
+
+Integer a = 5;    // Autoboxing  
+int b = a;        // Unboxing  
+
+Checked Exceptions		Unchecked Exceptions
+Compile-time (must handle).	Runtime (optional handling).
+E.g., IOException.		E.g., NullPointerException.
+
+StringBuilder for single-threaded apps.
+StringBuffer for multithreading.
+
+Synchronized Method: Locks the entire object : public synchronized void myMethod() { ... } 
+Synchronized Block: Locks a specific section : synchronized(this) { ... }
+
+Overloading					Overriding
+Same method name, different parameters.		Same method signature in subclass.
+Compile-time polymorphism.			Runtime polymorphism.
+
+Serialization: Object → Byte stream (for storage/transfer) : ObjectOutputStream.writeObject(obj); // Serialize  
+Deserialization: Byte stream → Object : ObjectInputStream.readObject();     // Deserialize  
+
+ArrayList for frequent reads.
+LinkedList for frequent modifications.
+
+HashMap				HashTable
+Not thread-safe.		Thread-safe (synchronized).
+Allows null keys/values.	No null keys/values.
+
+Best Practice: Prefer HashMap (use ConcurrentHashMap for threads).
+
+Enum: Type-safe, can have methods.
+
+
 
 ```
 
