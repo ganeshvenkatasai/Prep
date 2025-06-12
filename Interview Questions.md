@@ -134,6 +134,33 @@ Shallow Copy: Copies references (shared nested objects).    ArrayList<String> sh
 Deep Copy: Copies entire object hierarchy.		    ArrayList<String> deep = new ArrayList<>(original);  
 
 
+Java is always pass-by-value.		
+For primitives: A copy of the value is passed.
+For objects: A copy of the reference (memory address) is passed.
+
+Thread vs Runnable
+Thread: A class. Extending it limits flexibility (Java doesn’t support multiple inheritance).
+Runnable: An interface. Preferred because:
+Allows extending another class.
+Better for thread pooling.
+
+
+Switch : alternative to long if-else-if
+Without break, execution will "fall through" to the next case.
+default case: Optional but recommended for handling unexpected values.
+duplicate case not allowed, comiplation error
+Arrows syntax can also be used
+Arrow and : syntax both cant be used
+switch can return values
+Using null in a switch statement will throw a NullPointerException.
+
+
+String str = Integer.toString(number);
+String str = String.valueOf(number);
+String str = "" + number;
+
+int number = Integer.parseInt(str);
+Integer number = Integer.valueOf(str); 
 
 
 ```
