@@ -1,3 +1,71 @@
+## LLD 
+
+**Steps**
+
+```
+1. Requirements Clarification :
+
+Think about possible entities
+Write down the responsibilities
+Ask if any additional actions to be included
+Tell if you can add additional possible actions (keep it minimalistic)
+
+2. Define Key Components :
+List out all the important entities based on requirements
+
+3. Class Diagram Design :
+Draw a class diagram with entities
+Add attributes for it
+Write relationships, Enumerations, Multiplicity
+
+4. Design Patterns Consideration :
+Creational Patterns : Singleton, Factory Method, Abstract Factory, Builder, Prototype
+Structural Patterns : Adapter, Decorator, Facade, Composite, Proxy
+Behavioral Patterns : Observer, Strategy, Command, Iterator, State
+
+5. Interface Definitions :
+Based on design patterns make interfaces
+Use SOLID principles
+
+6. Core Logic Implementation :
+add methods for endpoints (CRUD and additional)
+Write Pseudocode for helper functions 
+Add Exceptions
+
+7. Database Considerations :
+Normaliation, Indexing
+
+
+8. Concurrency Handling :
+
+
+9. Scalability Discussion :
+
+
+10. Testing Approach :
+
+
+
+```
+
+
+**Generic things**
+
+```
+
+Payment : Strategy Design Pattern
+Payment processing failure scenarios.
+Use Enum
+Abstract Factory: Vehicle and ParkingSpot hierarchies.
+Singleton: ParkingLot (single instance in most implementations)
+Lost ticket handling (TicketStatus.LOST).
+
+
+
+
+```
+
+
 ```
 scalability, reliability, availability, latency
 CAP Theorem
