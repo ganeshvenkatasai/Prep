@@ -60,8 +60,41 @@ Abstract Factory: Vehicle and ParkingSpot hierarchies.
 Singleton: ParkingLot (single instance in most implementations)
 Lost ticket handling (TicketStatus.LOST).
 
+Blackbox
+
+Pull/ Push Notifications
+
+Soft Delete
 
 
+
+
+```
+
+**Tips**
+
+```
+
+**Requirements is God listen carefully**
+
+Nuv em cheppav ela cheppav ivem kadhu, perfect communication and how deep techinically you are good anthe 
+
+Interface is God
+
+1. Time Management : Keep less time for requirement gathering and keep requirements as minimalistic as possible
+After the requirements were given ask some generic questions (very less but impactful questions)
+
+2. Think like you are user 
+
+3. Note down requirements
+
+4. Use simple design patterns which can build quickly (Factory, Singleton, Observer, Startegy)
+
+5. Discuss tradeoffs
+
+6. Use DSA in UML
+
+7. Always practice on white board
 
 ```
 
