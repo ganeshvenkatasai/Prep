@@ -162,6 +162,8 @@ String str = "" + number;
 int number = Integer.parseInt(str);
 Integer number = Integer.valueOf(str); 
 
+class path : where the jar class files are located
+
 
 ```
 

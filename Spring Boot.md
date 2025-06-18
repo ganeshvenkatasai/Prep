@@ -1,3 +1,18 @@
+# Basics 
+
+```
+Spring boot makes development faster
+it makes production ready applications
+Spring boot makes easy, it will manage dependencies and configurations, so we can directly work with mvc 
+
+
+```
+
+
+
+
+
+
 # Core Concepts  
 - Spring Boot: Framework for creating stand-alone, production-grade Spring apps with minimal configuration.  
 - Auto-Configuration: Automatically configures Spring apps based on dependencies in the classpath.  
