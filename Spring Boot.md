@@ -43,7 +43,7 @@ Spring boot makes easy, it will manage dependencies and configurations, so we ca
 - @Entity: Marks a class as a JPA entity (maps to a database table).  
 - @Id: Specifies the primary key of an entity.  
 - @GeneratedValue: Configures auto-generation of primary keys.  
-- Hibernate: Default JPA implementation used by Spring Boot.  
+- Hibernate: Default JPA implementation used by Spring Boot. 
 
 # Database & Transactions  
 - @Transactional: Defines transaction boundaries (ACID properties).  

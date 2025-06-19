@@ -164,6 +164,8 @@ Integer number = Integer.valueOf(str);
 
 class path : where the jar class files are located
 
+Singleton Design Pattern : private constructor, synchronized method :  public static synchronized ThreadSafeSingleton getInstance()
+
 
 ```
 
@@ -174,6 +176,189 @@ class path : where the jar class files are located
 ## Spring Boot
 
 ```
+
+Dependency Injection :
+1. Constructor Injection
+2. Setter Injection
+3. Autowired
+
+Constructor Injection is preferred over Setter injection:
+when a class cannot function without its dependencies
+When you want dependencies to be immutable 
+
+What are Spring Beans?
+Spring Beans are objects that form the backbone of a Spring application
+Managed by the Spring IoC container
+Instantiated, assembled, and managed by the Spring framework
+
+Lifecycle Management: Spring handles creation, initialization, and destruction
+Dependency Injection: Beans can receive other beans they depend on
+Scope Control: Beans can have different lifecycles (singleton, prototype, etc.)
+Configuration: Can be defined via XML, annotations, or Java configuration
+
+Example :
+Spring starts up
+Creates UserService bean
+Injects UserRepository into it
+Calls @PostConstruct setup method
+Your app uses UserService for months
+On shutdown, Spring calls @PreDestroy cleanup
+
+@SpringBootApplication : Start of application
+@Configuration : 
+@EnableAutoConfiguration : automatically sets up database connections
+@ComponentScan : finds and registers your @Service, @Repository, and @Controller
+
+@Profile : differentiate between dev and prod environments
+
+Method-Level @Transactional is better (if all methods in class needs transactions then use class level Transactional)
+For read-only operations, always specify: 
+@Transactional(readOnly = true)
+public Order getOrder(Long id) { ... }
+
+When you apply @Transactional at both the class and method level in Spring, the method-level annotation takes precedence over the class-level (it leads to unusual behaviour)
+
+Compensating Transaction / Distrubuted Transaction Pattern : Saga (it is used in Remote Service failing)
+
+How Spring Boot Simplifies Web Development
+Auto-configuration: Detects your classpath and automatically configures beans
+Embedded Servers: Runs Tomcat, Jetty, or Undertow directly (no WAR deployment needed)
+Annotations-based controllers with no boilerplate
+Auto JSON conversion
+Actuator	Ready-made health checks, metrics, monitoring
+Security Starter	Add auth with spring-boot-starter-security
+Externalized Config	Switch between dev/prod with profiles
+Automatic DataSource setup (just define properties)
+Spring Data JPA reduces repository code by 80%
+Dependency Management : POM, Version compatibility handled automatically
+Live reload with DevTools
+Auto-restart on code changes
+Built-in testing support with @SpringBootTest
+Error pages with useful diagnostics
+Easy service discovery with Spring Cloud
+Circuit breakers via Resilience4j/Netflix Hystrix
+Config server for centralized configuration
+
+Flyway vs Liquibase: Database Migration Tools
+
+What Do Actuators Do?
+
+Health Check - Is the app healthy? (Like a fuel gauge) -> /actuator/health → {"status":"UP"}
+Metrics - Performance stats (Like a speedometer) -> /actuator/metrics → Memory usage, CPU, request counts
+Environment Details - Current configurations (Like engine diagnostics) -> /actuator/env → Shows all configuration properties
+Log Management - Change log levels on the fly (Like adjusting brightness) -> POST /actuator/loggers/com.example → Change logging level
+Thread Dump - See all running threads (Like checking engine parts) -> /actuator/threaddump → List of active threads
+
+
+What Spring Data JPA Offers Over Standard JPA
+Massive Reduction in Boilerplate Code
+public interface UserRepository extends JpaRepository<User, Long> {
+    // All CRUD methods come for free!
+}
+Automatic Query Generation : List<User> findByLastNameAndAgeLessThan(String lastName, int maxAge); Generates: WHERE last_name = ?1 AND age < ?2
+Pagination & Sorting : Page<User> findByLastName(String lastName, Pageable pageable); 
+Methods are transactional by default, No need for @Transactional annotations on repository methods
+
+JPA Methods :
+<S extends T> S save(S entity);           // Save single entity
+<S extends T> List<S> saveAll(Iterable<S> entities); // Save multiple
+Optional<T> findById(ID id);             // Find by primary key
+boolean existsById(ID id);               // Check if exists
+List<T> findAll();                       // Get all entities
+List<T> findAllById(Iterable<ID> ids);   // Get multiple by IDs
+long count();                            // Get total count
+<S extends T> S save(S entity);          // Updates if entity existsvoid deleteById(ID id);                  // Delete by ID
+void delete(T entity);                   // Delete single entity
+void deleteAll();                        // Delete all entities
+void deleteAll(Iterable<? extends T> entities); // Delete multiple	
+
+Query Derivation (From Method Names)
+// Basic field queries
+List<User> findByLastName(String lastName);
+List<User> findByFirstNameIgnoreCase(String firstName);
+List<User> findByAgeGreaterThan(int age);
+
+// Combined conditions
+List<User> findByLastNameAndFirstName(String lastName, String firstName);
+List<User> findByAgeBetween(int startAge, int endAge);
+
+// Null checks
+List<User> findByMiddleNameIsNull();
+List<User> findByMiddleNameIsNotNull();
+
+// Sorting
+List<User> findByLastNameOrderByFirstNameAsc(String lastName);
+
+Custom JPQL Queries
+@Query("SELECT u FROM User u WHERE u.active = true AND u.age > :minAge")
+List<User> findActiveUsersByMinimumAge(@Param("minAge") int age);
+
+@Query("UPDATE User u SET u.status = 'INACTIVE' WHERE u.lastLogin < :date")
+@Modifying
+void deactivateUsersNotLoggedInSince(@Param("date") LocalDate date);
+
+Native SQL Queries
+@Query(value = "SELECT * FROM users WHERE REGEXP_LIKE(email, :pattern)", 
+       nativeQuery = true)
+List<User> findByEmailPattern(@Param("pattern") String regexPattern);
+
+Pagination & Sorting
+Page<User> findByLastName(String lastName, Pageable pageable);
+Slice<User> findTop10ByOrderBySignupDateDesc();
+
+Asynchronous Queries
+@Async
+Future<User> findByUsername(String username);
+
+@Async
+CompletableFuture<List<User>> findAllByActiveTrue();
+
+Stream Processing
+@Query("SELECT u FROM User u WHERE u.status = 'ACTIVE'")
+Stream<User> streamAllActiveUsers();
+
+
+Is @Transactional Required in Spring Data JPA?
+If you write custom implementation for repository methods @Transactional is required
+All built-in CRUD methods and Query methods dont need @Transactional 
+
+Service layer is the ideal place for @Transactional annotations
+
+if we have long batch operations : Chunk Processing (Recommended) : Process records in smaller batches to avoid long transactions
+
+== compares references, .equals() compares content
+
+Comparing Content of Two Custom Objects in Java : Override equals() and hashCode() (Recommended for Most Cases)
+
+Java Memory Model (JMM):
+How threads interact through memory, When changes made by one thread become visible to others, The rules that prevent race conditions and ensure thread safety
+How JMM Solves Concurrency Issues :
+Using volatile
+Using synchronized
+Atomic Classes
+
+In HashMap, before java8 LinkedList is used for bucket, after balanced tree are using
+
+1. Checked Exceptions : compiler forces you to handle
+FileNotFoundException
+IOException
+SQLException
+ClassNotFoundException
+2. Unchecked Exceptions : compiler doesn't force you to handle
+NullPointerException
+ArrayIndexOutOfBoundsException
+IllegalArgumentException
+ArithmeticException
+
+Maven is build tool 
+Automatically downloads libraries (JAR files) your project needs
+Handles version conflicts between dependencies
+Maven clean : cleans the previous build
+Maven install : install and build whole application
+
+
+
+
 1. Difference between Spring and Spring Boot
 
 Spring: A framework for Java EE development, requires manual configuration.
