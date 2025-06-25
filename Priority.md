@@ -4,6 +4,11 @@ Java
 Spring Boot
 Design
 Core CS
+Git
+Kafka
+Redis
+MongoDB
+MySQL
 Practice interview questions
 ```
 
@@ -11,13 +16,8 @@ Practice interview questions
 ```
 AWS
 Docker
-Git
-Kafka
-RabbitMQ
 Kubernetes
-MongoDB
-MySQL
-Redis
+RabbitMQ
 ```
 
 ## Priority 3 :
