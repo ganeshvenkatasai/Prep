@@ -166,6 +166,35 @@ class path : where the jar class files are located
 
 Singleton Design Pattern : private constructor, synchronized method :  public static synchronized ThreadSafeSingleton getInstance()
 
+Integer can store null, where int cant store null
+
+int to String ->  String.valueOf(int) or Integer.toString(int)
+String to int -> Integer.valueOf(String) or Integer.parseInt(String)
+
+HashMap (Collision -> Linkedlist before java8, Red Black Tree after java 8)
+TreeMap -> Red Black Tree
+
+Intermediate Operations (Lazy Evaluation) -> These operations return a new stream and only execute when a terminal operation is called.
+
+it is not possible to use two terminal operations one after another on the same Java Stream.
+
+.flatMap(List::stream) 
+
+List<Integer> squaredNumbers = numbers.stream()
+    .peek(n -> System.out.println("Before map: " + n))
+    .map(n -> n * n)
+    .peek(n -> System.out.println("After map: " + n))
+    .collect(Collectors.toList());
+    
+    
+List<String> names = List.of("Alice", "Bob", "Charlie");
+
+Set<String> nameSet = names.stream()
+    .collect(Collectors.toSet());  // Convert to Set
+
+
+
+
 
 ```
 
