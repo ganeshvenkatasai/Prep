@@ -920,6 +920,133 @@ printNumbers(ints);    // Works
 printNumbers(doubles); // Also works
 ```
 
+## Java 8 features :
+
+### 1. Lambda Expressions
+
+```
+// Before Java 8 (Anonymous class)
+Runnable r = new Runnable() {
+    @Override
+    public void run() {
+        System.out.println("Hello");
+    }
+};
+
+// Java 8 (Lambda)
+Runnable r = () -> System.out.println("Hello");
+```
+
+### 2. Functional Interfaces
+
+```
+// Interfaces with a single abstract method (SAM). Java 8 introduced @FunctionalInterface annotation.
+
+@FunctionalInterface
+interface Greeting {
+    void sayHello(String name);
+}
+
+// Usage with Lambda
+Greeting greet = name -> System.out.println("Hello, " + name);
+greet.sayHello("Alice");
+```
+### 3. Stream API
+
+```
+List<String> names = Arrays.asList("Alice", "Bob", "Charlie");
+
+// Filter names starting with 'A' and convert to uppercase
+List<String> result = names.stream()
+                          .filter(name -> name.startsWith("A"))
+                          .map(String::toUpperCase)
+                          .collect(Collectors.toList());
+// Output: ["ALICE"]
+```
+### 4. Default and Static Methods in Interfaces
+
+```
+interface Vehicle {
+    void start();
+
+    default void honk() {  // Default method
+        System.out.println("Beep beep!");
+    }
+    
+    // Static method (Java 8)
+    static boolean isElectric(int batteryLevel) {
+        return batteryLevel > 0;
+    }
+}
+
+class Car implements Vehicle {
+    @Override
+    public void start() {
+        System.out.println("Car started");
+    }
+    // `honk()` is optional to override
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // Calling static method directly from the interface
+        boolean isElectric = Vehicle.isElectric(75);
+        System.out.println("Is electric? " + isElectric); // true
+    }
+}
+
+// Can have private static methods (Java 9+) for internal use.
+interface Vehicle {
+    static boolean isElectric(int battery) {
+        return isValidBattery(battery);
+    }
+
+    private static boolean isValidBattery(int battery) { // Java 9+
+        return battery >= 0;
+    }
+}
+
+```
+### 5. Method References
+
+```
+// Shortcut syntax for calling methods using ::
+
+List<String> names = Arrays.asList("Alice", "Bob", "Charlie");
+
+// Equivalent to: name -> System.out.println(name)
+names.forEach(System.out::println);
+```
+### 6. Optional Class
+
+```
+// Reduces NullPointerException by wrapping nullable values.
+
+Optional<String> name = Optional.ofNullable(getName());
+String result = name.orElse("Default"); // Returns "Default" if null
+```
+### 7. New Date & Time API (java.time)
+
+```
+LocalDate today = LocalDate.now();
+LocalDate birthday = LocalDate.of(1990, Month.JANUARY, 1);
+
+Period age = Period.between(birthday, today);
+System.out.println(age.getYears()); // Age in years
+```
+### 8. Parallel Streams
+
+```
+// Enables multi-threaded processing of collections.
+
+List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);
+
+// Process in parallel
+int sum = numbers.parallelStream()
+                .mapToInt(Integer::intValue)
+                .sum();
+```
+
 
 
 
