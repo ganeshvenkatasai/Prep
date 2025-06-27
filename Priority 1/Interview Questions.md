@@ -194,6 +194,99 @@ Set<String> nameSet = names.stream()
 
 
 
+import java.util.Scanner;
+Scanner scanner = new Scanner(System.in);
+String name = scanner.nextLine();
+
+next() - Reads a single word (until whitespace)
+nextLine() - Reads an entire line (until newline)
+nextInt(), nextDouble(), nextBoolean()
+
+// Always close the scanner when done
+   scanner.close();
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+
+public class FileWriteBuffered {
+    public static void main(String[] args) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("output.txt"))) {
+            writer.write("Using BufferedWriter");
+            writer.newLine();
+            writer.write("More efficient for multiple writes");
+        } catch (IOException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+}
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
+public class FileReadBuffered {
+    public static void main(String[] args) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("input.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+            }
+        } catch (IOException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+}
+
+
+ExecutorService: java.util.concurrent
+ExecutorService executor = Executors.newFixedThreadPool(4); // 4 threads
+ExecutorService executor = Executors.newCachedThreadPool();
+ExecutorService executor = Executors.newSingleThreadExecutor();
+ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(2);
+
+// execute() :
+executor.execute(() -> {
+    System.out.println("Task running in thread: " + Thread.currentThread().getName());
+});
+
+executor.shutdown(); // Shutdown when done
+
+// submit() :
+Future<Integer> future = executor.submit(() -> {
+    Thread.sleep(1000);
+    return 42; // Returns a result
+});
+
+try {
+    System.out.println("Result: " + future.get()); // Blocks until result is available
+} catch (Exception e) {
+    e.printStackTrace();
+}
+
+executor.shutdown();
+
+
+Atomic Variables :
+AtomicInteger (for int)
+AtomicLong (for long)
+AtomicBoolean (for boolean)
+AtomicReference<T> (for any object)
+AtomicIntegerArray, AtomicLongArray (for arrays)
+
+AtomicInteger counter = new AtomicInteger(0);
+counter.set(10); // Sets value to 10
+int value = counter.get(); // Reads value (10)
+boolean success = counter.compareAndSet(10, 20); // If current value is 10, set to 20
+System.out.println(counter.incrementAndGet()); // 1 (++i)
+System.out.println(counter.getAndIncrement()); // 1 (i++)
+AtomicInteger counter = new AtomicInteger(5);
+counter.updateAndGet(x -> x * 2); // 10
+counter.accumulateAndGet(3, (x, y) -> x + y); // 13
+
+
+
+
 
 
 ```

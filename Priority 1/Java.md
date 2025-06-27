@@ -825,7 +825,100 @@ Optional<Integer> sum = Stream.of(1, 2).reduce((a, b) -> a + b);
 System.out.println(sum.get()); // OK if stream is not empty
 ```
 
+## Generics
 
+```
+T → Type (e.g., List<T>)
+
+E → Element (e.g., ArrayList<E>)
+
+K → Key (e.g., Map<K, V>)
+
+V → Value (e.g., Map<K, V>)
+
+? → Wildcard (unknown type)
+```
+
+### Generic Classes
+
+```
+class Box<T> {  // 'T' is a type placeholder
+    private T item;
+
+    public void setItem(T item) {
+        this.item = item;
+    }
+
+    public T getItem() {
+        return item;
+    }
+}
+
+Box<String> stringBox = new Box<>();
+stringBox.setItem("Hello");
+String value = stringBox.getItem(); // No casting needed!
+
+Box<Integer> intBox = new Box<>();
+intBox.setItem(100);
+int num = intBox.getItem(); // Works with Integer too!
+
+```
+
+### Generic Methods
+
+```
+public <T> void printArray(T[] array) {  // <T> before return type
+    for (T item : array) {
+        System.out.print(item + " ");
+    }
+}
+
+String[] names = {"Alice", "Bob", "Charlie"};
+printArray(names); // Works with String[]
+
+Integer[] numbers = {1, 2, 3};
+printArray(numbers); // Also works with Integer[]
+```
+
+### Bounded Generics (Restricting Types)
+
+```
+class MathBox<T extends Number> {  // T must be Number or subclass (Integer, Double, etc.)
+    private T number;
+
+    public MathBox(T number) {
+        this.number = number;
+    }
+
+    public double square() {
+        return number.doubleValue() * number.doubleValue();
+    }
+}
+
+MathBox<Integer> intBox = new MathBox<>(5);
+System.out.println(intBox.square()); // 25.0
+
+MathBox<Double> doubleBox = new MathBox<>(3.5);
+System.out.println(doubleBox.square()); // 12.25
+
+// MathBox<String> stringBox = new MathBox<>("Test"); // ERROR! String is not a Number
+```
+
+### Wildcards (?) for Flexibility
+
+```
+public static void printNumbers(List<? extends Number> list) {
+    for (Number num : list) {
+        System.out.print(num + " ");
+    }
+}
+
+List<Integer> ints = List.of(1, 2, 3);
+List<Double> doubles = List.of(1.1, 2.2, 3.3);
+
+printNumbers(ints);    // Works
+printNumbers(doubles); // Also works
+```
 
 
 
