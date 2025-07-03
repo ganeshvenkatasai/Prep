@@ -239,7 +239,7 @@ public class FileReadBuffered {
 }
 
 
-ExecutorService: java.util.concurrent
+ExecutorService: java.util.concurrent // from Java 5 onward
 ExecutorService executor = Executors.newFixedThreadPool(4); // 4 threads
 ExecutorService executor = Executors.newCachedThreadPool();
 ExecutorService executor = Executors.newSingleThreadExecutor();
@@ -285,6 +285,16 @@ counter.updateAndGet(x -> x * 2); // 10
 counter.accumulateAndGet(3, (x, y) -> x + y); // 13
 
 
+Multithreading :
+Thread.currentThread().getName() // Thread-0
+
+New: When created but not started
+Runnable: When start() is called
+Running: When executing
+Blocked/Waiting: When waiting for resources
+Terminated: When execution completes
+
+ t1.join(); // Wait for t1 to finish
 
 
 

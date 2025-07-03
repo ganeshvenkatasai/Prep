@@ -1005,7 +1005,6 @@ interface Vehicle {
         return battery >= 0;
     }
 }
-
 ```
 ### 5. Method References
 
