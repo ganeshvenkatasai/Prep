@@ -297,6 +297,82 @@ Terminated: When execution completes
  t1.join(); // Wait for t1 to finish
 
 
+Most collections throw ConcurrentModificationException if modified during iteration.
+Use Iterator.remove() for safe removal in List, Set, Map, Queue, Deque.
+Java 8+? Prefer removeIf() where possible.
+Concurrent collections (ConcurrentHashMap, CopyOnWriteArrayList) allow direct removal but
+
+
+
+The default initial capacity of an ArrayList in Java is 10.
+The growth factor is (oldCapacity * 3)/2 + 1
+If created with new ArrayList<>(0), Java delays allocation until the first element is added.
+If you know the approximate size, initialize with a higher capacity to avoid reallocations
+
+The load factor is a critical performance parameter in hash-based collections (HashMap, HashSet, LinkedHashMap, HashTable)
+Default HashMap (Capacity=16, Load Factor=0.75)
+Map<String, Integer> map = new HashMap<>(16, 0.5f); // Resizes at 8 elements
+
+
+Collections.synchronizedMap() (Legacy Thread-Safe Map) :
+Wraps any Map (e.g., HashMap, LinkedHashMap) and makes it thread-safe.
+Uses synchronized blocks on the entire map (monitor lock)
+
+Map<String, Integer> map = new HashMap<>();
+Map<String, Integer> syncMap = Collections.synchronizedMap(map); // Now thread-safe
+
+Poor performance under high contention (only one thread can access the map at a time).
+
+ConcurrentHashMap (Modern Thread-Safe Map) :
+Uses fine-grained locking (lock striping) and CAS (Compare-And-Swap) operations.
+Allows multiple threads to read and write concurrently without full synchronization.
+
+Map<String, Integer> concurrentMap = new ConcurrentHashMap<>();
+
+Higher throughput in multi-threaded environments.
+Atomic operations (e.g., putIfAbsent(), compute()).
+Scalable (better than synchronizedMap).
+Does not allow null keys/values (throws NullPointerException)
+
+
+ThreadLocal:
+Each thread has its own instance of the variable.
+No synchronization needed (since threads don’t share the variable).
+Common use cases:
+Storing user sessions (e.g., in web apps).
+Storing transaction contexts (e.g., in JDBC).
+Per-thread caching (e.g., SimpleDateFormat).
+
+ThreadLocal<Integer> threadLocalCounter = new ThreadLocal<>();
+// Each thread sets its own value
+threadLocalCounter.set(0);
+// Each thread increments its own copy
+threadLocalCounter.set(threadLocalCounter.get() + 1);
+
+Always threadLocal.remove() after use to prevent memory leaks
+
+
+
+HashMap -> one null key and multiple null values : 0 index is reserved for null key
+
+
+Thread-Safe Classes in Java:
+Hashtable
+Vector
+Stack
+Collections.synchronizedList(List<T> list)
+Collections.synchronizedMap(Map<K,V> map)
+Collections.synchronizedSet(Set<T> set)
+ConcurrentHashMap	High-concurrency Map	Fine-grained locking, atomic operations (putIfAbsent, compute)
+CopyOnWriteArrayList	Thread-safe List	Snapshot iteration (no ConcurrentModificationException)
+CopyOnWriteArraySet	Thread-safe Set	Backed by CopyOnWriteArrayList
+BlockingQueue	        Thread-safe FIFO queue	Supports producer-consumer patterns
+ConcurrentLinkedQueue	Lock-free thread-safe queue	Non-blocking, high performance
+ConcurrentSkipListMap	Thread-safe sorted Map	Scalable alternative to TreeMap
+ConcurrentSkipListSet	Thread-safe sorted Set	Backed by ConcurrentSkipListMap
+
+
+
 
 
 ```
