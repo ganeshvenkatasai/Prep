@@ -59,6 +59,7 @@ git push origin <tag_name>              # Push a tag to the remote repository
 git clean -f                            # Remove untracked files
 git reset --hard HEAD                   # Reset to the last commit and remove all changes
 
+
 git config --global alias.st "status"   # Git Alias
 
 git reset --hard HEAD~1    # Remove last commit and discard all changes  
